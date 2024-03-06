@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import Onboarding from './screens/Onboarding';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>LITTLE LEMON MENU APP</Text>
+    <View style={styles.container} >
+      <Onboarding />
       <StatusBar style="auto" />
     </View>
   );
@@ -13,7 +14,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#333333',
     alignItems: 'center',
     justifyContent: 'center',
   },
