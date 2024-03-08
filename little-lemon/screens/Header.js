@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 
-const OBheader = () => {
+const Header = () => {
     return (
         <View style={styles.header}>
             <Image source={require('../img/LittleLemonLogo.png')} style={styles.logo} resizeMode="contain" />
@@ -18,11 +18,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     logo: {
-        height: 100,
+        height: 50,
         width: 350,
         marginTop: 10,
         marginBottom: 10,
     },
 });
 
-export default OBheader;
+export default Header;

@@ -5,14 +5,16 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  Pressable,
+  Button,
   Alert,
 } from 'react-native';
-import OBheader from './OBheader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Header from './Header';
 
-export default function LoginScreen({ navigation }) {
+export default function OnboardingScreen({ navigation }) {
     const [email, onChangeEmail] = useState('');
     const [firstName, onChangeFirstName] = useState('');
+    const [onboardingCompleted, setOnboardingCompleted] = useState(false);
 
     const validateFirstName = (name) => {
         if (!name || !/^[a-zA-Z]+$/.test(name)) {
@@ -28,56 +30,77 @@ export default function LoginScreen({ navigation }) {
         return true;
     };
 
-    const handlePress = () => {
-        if (!validateFirstName(firstName)) {
-            Alert.alert('Invalid first name. Please enter a valid first name.');
-            return;
+    const handlePress = async () => {
+      try {
+        await AsyncStorage.setItem('onboardingCompleted', 'true');
+        setOnboardingCompleted(true);
+        navigation.navigate('Profile', { email: email, firstName: firstName });
+
+        // Check that the value was saved to disk
+        const savedValue = await AsyncStorage.getItem('onboardingCompleted');
+        if (savedValue === 'true') {
+          console.log('Onboarding completed state was saved to disk successfully');
+        } else {
+          console.log('Failed to save onboarding completed state to disk');
         }
-        if (!validateEmail(email)) {
-            Alert.alert('Invalid email. Please enter a valid email.');
-            return;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const checkOnboarding = async () => {
+      try {
+        const value = await AsyncStorage.getItem('onboardingCompleted');
+        if (value !== null) {
+          console.log(value);
         }
-        navigation.navigate('Welcome');
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     return (
-        <ScrollView style={styles.container} keyboardDismissMode='on-drag'>
-          <OBheader />
-          <Text style={styles.headerText}>Let us get to know you</Text>
-          <Text style={styles.regularText}>First Namne</Text>
-          <TextInput
-            style={styles.inputBox}
-            value={firstName}
-            onChangeText={onChangeFirstName}
-            placeholder={'First Name'}
-            keyboardType={'default'}
-          />
-          <Text style={styles.regularText}>Email</Text>
-          <TextInput
-            style={styles.inputBox}
-            value={email}
-            onChangeText={onChangeEmail}
-            placeholder={'email'}
-            keyboardType={'email-address'}
-          />
-
-          <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-            <Pressable
+        <View style={styles.container}>
+          <ScrollView keyboardDismissMode='on-drag'>
+            <Text style={styles.headerText}>Let us get to know you</Text>
+            <Text style={styles.regularText}>First Name</Text>
+            <TextInput
+              style={styles.inputBox}
+              value={firstName}
+              onChangeText={onChangeFirstName}
+              placeholder={'First Name'}
+              keyboardType={'default'}
+            />
+            <Text style={styles.regularText}>Email</Text>
+            <TextInput
+              style={styles.inputBox}
+              value={email}
+              onChangeText={onChangeEmail}
+              placeholder={'Email'}
+              keyboardType={'email-address'}
+            />
+          </ScrollView>
+          <View style={styles.buttonContainer}>
+            <Button
               onPress={handlePress}
-              style={styles.button}
-              disabled={!validateFirstName(firstName) || !validateEmail(email)}>
-              <Text style={styles.buttonText}>NEXT</Text>
-            </Pressable>
+              title="NEXT"
+              color={validateFirstName(firstName) && validateEmail(email) ? 'green' : 'grey'}
+              disabled={!validateFirstName(firstName) || !validateEmail(email)}
+            />
           </View>
-        </ScrollView>
+        </View>
       );
-    }
-    
+}
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#333333', // dark background
+  },
+  buttonContainer: {
+    justifyContent: 'flex-end',
+    marginBottom: 36,
   },
   headerText: {
     padding: 40,
@@ -101,20 +124,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey', // darker input background
     color: '#CCCCCC', // darker text
     borderRadius: 10,
-  },
-  button: {
-    fontSize: 22,
-    padding: 10,
-    marginVertical: 100,
-    margin: 100,
-    backgroundColor: '#EE9972',
-    borderColor: '#EE9972',
-    borderWidth: 2,
-    borderRadius: 15,
-  },
-  buttonText: {
-    color: 'black',
-    textAlign: 'center',
-    fontSize: 25,
   },
 });
