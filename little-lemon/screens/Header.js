@@ -1,28 +1,67 @@
-import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, Animated } from 'react-native';
 
-const Header = () => {
-    return (
-        <View style={styles.header}>
-            <Image source={require('../img/LittleLemonLogo.png')} style={styles.logo} resizeMode="contain" />
-        </View>
-    );
-};
+export default function LittleLemonHeader() {
+  const bounceValue = useRef(new Animated.Value(500)).current;
+  const spinValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.sequence([
+      Animated.spring(bounceValue, {
+        toValue: 0,
+        speed: 3,
+        bounciness: 15,
+        useNativeDriver: true,
+      }),
+      Animated.spring(bounceValue, {
+        toValue: 0,
+        speed: 1,
+        bounciness: 20,
+        useNativeDriver: true,
+      }),
+      Animated.timing(spinValue, {
+        toValue: 1,
+        duration: 800,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
+
+  const spin = spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  });
+
+  return (
+    <View style={styles.container}>
+      <Animated.Image
+        style={[
+          styles.logo,
+          { transform: [{ translateX: bounceValue }, { rotate: spin }] },
+        ]}
+        source={require('../img/LittleLemonLogo.png')}
+        resizeMode="contain"
+      />
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
-    header: {
-        alignItems: 'center',
-        justifyContent: 'center', // center the logo vertically
-        padding: 10,
-        backgroundColor: '#f8f8f8',
-        marginTop: 20,
-    },
-    logo: {
-        height: 50,
-        width: 350,
-        marginTop: 10,
-        marginBottom: 10,
-    },
+  container: {
+    backgroundColor: '#EE9972',
+    alignItems: 'center', // to center the items horizontally
+  },
+  headerText: {
+    padding: 20,
+    fontSize: 20,
+    color: 'black',
+    textAlign: 'center',
+  },
+  logo: {
+    height: 50,
+    width: 150,
+    resizeMode: 'contain',
+    marginTop: 40,
+    marginBottom: 20,
+  },
 });
-
-export default Header;

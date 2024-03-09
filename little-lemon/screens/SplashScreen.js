@@ -26,7 +26,7 @@ function SplashScreen() {
     return (
         <View style={styles.container}>
             <Animated.Image
-                source={require('../img/logo.png')}
+                source={require('../img/logoSplash.png')}
                 style={{ ...styles.logo, transform: [{ rotate: spin }] }}
             />
         </View>
@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logo: {
-        height: 250,
-        width: 250,
+        height: 300,
+        width: 300,
         resizeMode: 'contain',
     },
 });

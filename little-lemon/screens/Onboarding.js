@@ -9,12 +9,11 @@ import {
   Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Header from './Header';
+
 
 export default function OnboardingScreen({ navigation }) {
     const [email, onChangeEmail] = useState('');
     const [firstName, onChangeFirstName] = useState('');
-    const [onboardingCompleted, setOnboardingCompleted] = useState(false);
 
     const validateFirstName = (name) => {
         if (!name || !/^[a-zA-Z]+$/.test(name)) {
@@ -33,17 +32,9 @@ export default function OnboardingScreen({ navigation }) {
     const handlePress = async () => {
       try {
         await AsyncStorage.setItem('onboardingCompleted', 'true');
-        setOnboardingCompleted(true);
         navigation.navigate('Profile', { email: email, firstName: firstName });
-
-        // Check that the value was saved to disk
-        const savedValue = await AsyncStorage.getItem('onboardingCompleted');
-        if (savedValue === 'true') {
-          console.log('Onboarding completed state was saved to disk successfully');
-        } else {
-          console.log('Failed to save onboarding completed state to disk');
-        }
       } catch (error) {
+        // Error saving data
         console.log(error);
       }
     };
@@ -52,12 +43,16 @@ export default function OnboardingScreen({ navigation }) {
       try {
         const value = await AsyncStorage.getItem('onboardingCompleted');
         if (value !== null) {
+          // value previously stored
           console.log(value);
         }
       } catch (error) {
+        // Error retrieving data
         console.log(error);
       }
     };
+
+
 
     return (
         <View style={styles.container}>
@@ -90,8 +85,8 @@ export default function OnboardingScreen({ navigation }) {
           </View>
         </View>
       );
-}
-
+    }
+    
 
 const styles = StyleSheet.create({
   container: {

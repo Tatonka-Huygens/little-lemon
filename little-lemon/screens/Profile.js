@@ -7,7 +7,7 @@ import {
   TextInput,
   Image,
   Pressable,
-  Button 
+  Button,
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
@@ -17,7 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
-export default function Profile({ route, navigation}) {
+export default function ProfileScreen({ route, navigation}) {
     const { email: initialEmail, firstName: initialFirstName } = route.params || {};
     const [email, onChangeEmail] = useState(initialEmail || '');
     const [firstName, onChangeFirstName] = useState(initialFirstName || '');
@@ -45,6 +45,7 @@ export default function Profile({ route, navigation}) {
             };
     
             await AsyncStorage.setItem('userData', JSON.stringify(userData));
+            navigation.navigate('Home');
         } catch (error) {
             console.error(error);
         }
@@ -108,6 +109,9 @@ export default function Profile({ route, navigation}) {
     };
 
 
+    const [formattedPhoneNumber, setFormattedPhoneNumber] = useState('');
+
+
     React.useEffect(() => {
         const loadUserData = async () => {
             try {
@@ -139,16 +143,16 @@ export default function Profile({ route, navigation}) {
         <View style={styles.avatar}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 {image ? (
-                    <Image source={{ uri: image }} style={{ width: 100, height: 100, borderRadius: 50 }} />
+                    <Image source={{ uri: image }} style={{ width: 100, height: 100, borderRadius: 50 , marginLeft: 10,marginRight:20}} />
                 ) : (
                     <View style={styles.avatarPlaceholder}>
                         <Text style={styles.avatarPlaceholderText}>
-                            {firstName[0].toUpperCase()}
+                            {firstName[0]}
                         </Text>
                     </View>
                 )}
                 <Pressable onPress={pickImage} style={[styles.changeButton, { marginLeft: 10 , padding:10}]}>
-                    <Text style={styles.buttonText}>Change</Text>
+                    <Text style={styles.buttonText2}>Change</Text>
                 </Pressable>
             </View>
             <Text style={styles.regularText}> </Text>
@@ -182,33 +186,53 @@ export default function Profile({ route, navigation}) {
           />
             <Text style={styles.regularText}>Phone Number</Text>
             <TextInput
-              style={styles.inputBox}
-              value={phoneNumber}
-              onChangeText={onChangePhoneNumber}
-              placeholder={'Phone Number'}
-              keyboardType={'phone-pad'}
-          />
+            style={styles.inputBox}
+            value={formattedPhoneNumber}
+            onChangeText={onChangePhoneNumber}
+            placeholder={'Phone Number'}
+            keyboardType={'phone-pad'}
+            />
           <Text style={styles.headerText}>Email notifications</Text>
         <View style={styles.checkboxContainer}>
         <CheckBox
-            title='Order statuses'
+            title='Order Statuses'
+            checkedIcon='dot-circle-o'
+            uncheckedIcon='circle-o'
             checked={isSelectedOrderStatuses}
             onPress={() => setSelectionOrderStatuses(!isSelectedOrderStatuses)}
+            containerStyle={{backgroundColor: '#333333', borderWidth: 0}} // dark background
+            textStyle={{color: '#FFFFFF'}} // light text
+            checkedColor='#FFFFFF' // light check
         />
         <CheckBox
             title='Password changes'
+            checkedIcon='dot-circle-o'
+            uncheckedIcon='circle-o'
             checked={isSelectedPasswordChanges}
             onPress={() => setSelectionPasswordChanges(!isSelectedPasswordChanges)}
+            containerStyle={{backgroundColor: '#333333', borderWidth: 0}} // dark background
+            textStyle={{color: '#FFFFFF'}} // light text
+            checkedColor='#FFFFFF' // light check
         />
         <CheckBox
             title='Special offers'
+            checkedIcon='dot-circle-o'
+            uncheckedIcon='circle-o'
             checked={isSelectedSpecialOffers}
             onPress={() => setSelectionSpecialOffers(!isSelectedSpecialOffers)}
+            containerStyle={{backgroundColor: '#333333', borderWidth: 0}} // dark background
+            textStyle={{color: '#FFFFFF'}} // light text
+            checkedColor='#FFFFFF' // light check
         />
         <CheckBox
             title='Newsletter'
+            checkedIcon='dot-circle-o'
+            uncheckedIcon='circle-o'
             checked={isSelectedNewsletter}
             onPress={() => setSelectionNewsletter(!isSelectedNewsletter)}
+            containerStyle={{backgroundColor: '#333333', borderWidth: 0}} // dark background
+            textStyle={{color: '#FFFFFF'}} // light text
+            checkedColor='#FFFFFF' // light check
         />
         </View>
         <Pressable style={styles.button} onPress={handleLogout}>
@@ -222,7 +246,7 @@ export default function Profile({ route, navigation}) {
         </View>
         <View>
         <Pressable style={[styles.button, styles.saveChangesButton]} onPress={handlePress}>
-            <Text style={styles.buttonText}>Save changes</Text>
+            <Text style={styles.buttonText2}>Save changes</Text>
         </Pressable>
         </View>
         </View>
@@ -237,17 +261,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#333333', // dark background
   },
   headerText: {
-    padding: 40,
-    fontSize: 30,
+    padding: 15,
+    fontSize: 25,
     color: '#EDEFEE', // light text
-    textAlign: 'center',
+    textAlign: 'left', // Align text to the left
   },
   regularText: {
-    fontSize: 24,
-    padding: 5,
-    marginVertical: 8,
+    fontSize: 15,
+    padding: 3,
     color: '#EDEFEE', // light text
-    textAlign: 'center',
+    textAlign: 'left', // Align text to the left
+    marginLeft: 20,
   },
   inputBox: {
     height: 40,
@@ -262,10 +286,11 @@ const styles = StyleSheet.create({
   avatar: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10,
+    justifyContent: 'left',
+    padding: 5,
     backgroundColor: '#333333',
-    marginTop: 20,
+    marginTop: 5,
+    marginBottom: 20,
   },
   avatarImage: {
     width: 100,
@@ -311,6 +336,10 @@ const styles = StyleSheet.create({
         color: '#333333',
         fontSize: 16,
       },
+        buttonText2: {
+            color: '#EDEFEE',
+            fontSize: 16,
+        },
       removeButton: {
         backgroundColor: '#EDEFEE',
         borderRadius: 5,
@@ -326,6 +355,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 50,
+        marginLeft: 10,
+        marginRight:20,
     },
     avatarPlaceholderText: {
         fontSize: 40,
