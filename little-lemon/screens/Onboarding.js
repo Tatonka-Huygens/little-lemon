@@ -9,6 +9,7 @@ import {
   Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import OBHeader from './OBHeader';
 
 
 export default function OnboardingScreen({ navigation }) {
@@ -55,6 +56,8 @@ export default function OnboardingScreen({ navigation }) {
 
 
     return (
+      <>
+      <OBHeader />
         <View style={styles.container}>
           <ScrollView keyboardDismissMode='on-drag'>
             <Text style={styles.headerText}>Let us get to know you</Text>
@@ -84,6 +87,7 @@ export default function OnboardingScreen({ navigation }) {
             />
           </View>
         </View>
+        </>
       );
     }
     

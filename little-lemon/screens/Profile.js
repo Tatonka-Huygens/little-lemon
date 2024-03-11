@@ -12,6 +12,7 @@ import {
 import { CheckBox } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Header from './Header';
 
 
 
@@ -137,6 +138,8 @@ export default function ProfileScreen({ route, navigation}) {
     }, []);
 
     return (
+      <>
+      <Header />
         <ScrollView style={styles.container} keyboardDismissMode='on-drag'>
           <Text style={styles.headerText}>Personal information</Text>
           <Text style={styles.regularText}>Avatar</Text>
@@ -251,6 +254,7 @@ export default function ProfileScreen({ route, navigation}) {
         </View>
         </View>
         </ScrollView>
+        </>
       );
     }
     

@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from './screens/SplashScreen';
 import OnboardingScreen from './screens/Onboarding';
 import HomeScreen from './screens/Home'; // import your Home screen
-import Header from './screens/Header';
+import Header from './screens/OBHeader';
 import ProfileScreen from './screens/Profile';
 
 const Stack = createNativeStackNavigator();
@@ -36,7 +36,6 @@ export default function App() {
 
       return (
         <> 
-        <Header />
         <NavigationContainer>
           <Stack.Navigator initialRouteName={isOnboardingCompleted ? "Home" : "Onboarding"}>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} />
