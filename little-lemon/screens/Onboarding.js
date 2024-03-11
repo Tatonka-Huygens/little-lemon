@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import OBHeader from './OBHeader';
 
 
+
 export default function OnboardingScreen({ navigation }) {
     const [email, onChangeEmail] = useState('');
     const [firstName, onChangeFirstName] = useState('');
@@ -59,7 +60,7 @@ export default function OnboardingScreen({ navigation }) {
       <>
       <OBHeader />
         <View style={styles.container}>
-          <ScrollView keyboardDismissMode='on-drag'>
+          <ScrollView keyboardDismissMode = 'on-drag'>
             <Text style={styles.headerText}>Let us get to know you</Text>
             <Text style={styles.regularText}>First Name</Text>
             <TextInput
