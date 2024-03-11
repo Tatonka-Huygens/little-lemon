@@ -37,7 +37,7 @@ export default function App() {
       return (
         <> 
         <NavigationContainer>
-          <Stack.Navigator initialRouteName={isOnboardingCompleted ? "Home" : "Onboarding"}>
+          <Stack.Navigator initialRouteName={isOnboardingCompleted ? "Profile" : "Onboarding"}>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} />
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Profile" component={ProfileScreen} />

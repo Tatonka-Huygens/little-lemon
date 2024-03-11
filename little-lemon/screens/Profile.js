@@ -23,13 +23,18 @@ export default function ProfileScreen({ route, navigation}) {
     const [email, onChangeEmail] = useState(initialEmail || '');
     const [firstName, onChangeFirstName] = useState(initialFirstName || '');
     const [lastName, onChangeLastName] = useState('');
-    const [phoneNumber, onChangePhoneNumber] = useState('');
+    const [formattedPhoneNumber, setFormattedPhoneNumber] = useState('');
     const [isSelectedOrderStatuses, setSelectionOrderStatuses] = useState(false);
     const [isSelectedPasswordChanges, setSelectionPasswordChanges] = useState(false);
     const [isSelectedSpecialOffers, setSelectionSpecialOffers] = useState(false);
     const [isSelectedNewsletter, setSelectionNewsletter] = useState(false);
     const [image, setImage] = useState(null);
 
+
+    const onChangePhoneNumber = (number) => {
+      let formattedNumber = number.replace(/(\d{3})(\d{3})(\d{4})/, "($1)$2-$3");
+      setFormattedPhoneNumber(formattedNumber);
+    };
 
     const handlePress = async () => {
         try {
@@ -38,7 +43,7 @@ export default function ProfileScreen({ route, navigation}) {
                 firstName,
                 lastName,
                 email,
-                phoneNumber,
+                formattedPhoneNumber,
                 isSelectedOrderStatuses,
                 isSelectedPasswordChanges,
                 isSelectedSpecialOffers,
@@ -83,15 +88,15 @@ export default function ProfileScreen({ route, navigation}) {
     };
   
 
-    const validateFirstName = (name) => {
-        if (!name || !/^[a-zA-Z]+$/.test(name)) {
+    const validateFirstName = (firstName) => {
+        if (!firstName || !/^[a-zA-Z]+$/.test(firstName)) {
             return false;
         }
         return true;
     };
 
-    const validateLastName = (name) => {
-        if (!name || !/^[a-zA-Z]+$/.test(name)) {
+    const validateLastName = (lastName) => {
+        if (!lastName || !/^[a-zA-Z]+$/.test(lastName)) {
             return false;
         }
         return true;
@@ -104,13 +109,12 @@ export default function ProfileScreen({ route, navigation}) {
         return true;
     };
 
-    const validatePhoneNumber = (phoneNumber) => {
+    const validatePhoneNumber = (formattedPhoneNumber) => {
         const regex = /^\+?1?[-.\s]?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
-        return regex.test(phoneNumber);
+        return regex.test(formattedPhoneNumber);
     };
 
 
-    const [formattedPhoneNumber, setFormattedPhoneNumber] = useState('');
 
 
     React.useEffect(() => {
@@ -123,7 +127,7 @@ export default function ProfileScreen({ route, navigation}) {
                     onChangeFirstName(userData.firstName);
                     onChangeLastName(userData.lastName);
                     onChangeEmail(userData.email);
-                    onChangePhoneNumber(userData.phoneNumber);
+                    onChangePhoneNumber(userData.formattedPhoneNumber);
                     setSelectionOrderStatuses(userData.isSelectedOrderStatuses);
                     setSelectionPasswordChanges(userData.isSelectedPasswordChanges);
                     setSelectionSpecialOffers(userData.isSelectedSpecialOffers);
@@ -167,7 +171,12 @@ export default function ProfileScreen({ route, navigation}) {
           <TextInput
             style={styles.inputBox}
             value={firstName}
-            onChangeText={onChangeFirstName}
+            onChangeText={(text) => {
+              onChangeFirstName(text);
+              if (!validateFirstName(text)) {
+                alert('Invalid first name');
+              }
+            }}
             placeholder={'First Name'}
             keyboardType={'default'}
           />
@@ -175,26 +184,36 @@ export default function ProfileScreen({ route, navigation}) {
           <TextInput
             style={styles.inputBox}
             value={lastName}
-            onChangeText={onChangeLastName}
+            onChangeText={(text) => {
+              onChangeLastName(text);
+              if (!validateLastName(text)) {
+                alert('Invalid last name');
+              }
+            }}
             placeholder={'Last Name'}
             keyboardType={'default'}
           />
           <Text style={styles.regularText}>Email</Text>
           <TextInput
-            style={styles.inputBox}
-            value={email}
-            onChangeText={onChangeEmail}
-            placeholder={'Email'}
-            keyboardType={'email-address'}
-          />
-            <Text style={styles.regularText}>Phone Number</Text>
-            <TextInput
+              style={styles.inputBox}
+              value={email}
+              onChangeText={(text) => {
+                onChangeEmail(text);
+                if (!validateEmail(text)) {
+                  alert('Invalid email');
+                }
+              }}
+              placeholder={'Email'}
+              keyboardType={'email-address'}
+            />
+          <Text style={styles.regularText}>Phone Number</Text>
+          <TextInput
             style={styles.inputBox}
             value={formattedPhoneNumber}
             onChangeText={onChangePhoneNumber}
             placeholder={'Phone Number'}
             keyboardType={'phone-pad'}
-            />
+          />
           <Text style={styles.headerText}>Email notifications</Text>
         <View style={styles.checkboxContainer}>
         <CheckBox
