@@ -150,7 +150,7 @@ export default function ProfileScreen({ route, navigation}) {
                 ) : (
                     <View style={styles.avatarPlaceholder}>
                         <Text style={styles.avatarPlaceholderText}>
-                            {firstName[0]}
+                            {firstName[0]}{lastName[0]}
                         </Text>
                     </View>
                 )}
