@@ -1,13 +1,14 @@
 // App.js
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from './screens/SplashScreen';
 import OnboardingScreen from './screens/Onboarding';
 import HomeScreen from './screens/Home'; // import your Home screen
-import Header from './screens/OBHeader';
 import ProfileScreen from './screens/Profile';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -37,11 +38,16 @@ export default function App() {
       return (
         <> 
         <NavigationContainer>
+          <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={{ flex: 1 }}
+          >
           <Stack.Navigator initialRouteName={isOnboardingCompleted ? "Profile" : "Onboarding"}>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} />
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Profile" component={ProfileScreen} />
           </Stack.Navigator>
+          </KeyboardAvoidingView>
         </NavigationContainer>
         </>
       );
