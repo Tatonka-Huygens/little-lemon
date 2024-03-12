@@ -29,7 +29,7 @@ export default function Header({ firstName, lastName, image }) {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row', // to align items horizontally
-        justifyContent: 'space-between', // to create space between the logo and the profile image
+        justifyContent: 'space-between', // to center the items horizontally
         backgroundColor: '#EE9972',
         alignItems: 'center', // to center the items vertically
         paddingHorizontal: 10, // to give some space on the sides
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         marginTop: 40,
         marginBottom: 20,
+        marginLeft: 120,
     },
     profileImageContainer: {
         height: 50,
@@ -53,22 +54,21 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         overflow: 'hidden',
         backgroundColor: '#ccc',
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: 'flex-end',
     },
     profileImage: {
         height: '100%',
         width: '100%',
     },
     avatarPlaceholder: {
-        width: 100,
-        height: 100,
+        width: 50,
+        height: 50,
         backgroundColor: 'aqua',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 50,
         marginLeft: 10,
-        marginRight:10,
+        marginRight:0,
     },
     avatarPlaceholderText: {
         fontSize: 20,
