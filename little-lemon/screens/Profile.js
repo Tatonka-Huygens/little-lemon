@@ -143,7 +143,7 @@ export default function ProfileScreen({ route, navigation}) {
 
     return (
       <>
-      <Header />
+      <Header route={route} firstName={firstName} lastName={lastName} image={image} />
         <ScrollView style={styles.container} keyboardDismissMode='on-drag'>
           <Text style={styles.headerText}>Personal information</Text>
           <Text style={styles.regularText}>Avatar</Text>
