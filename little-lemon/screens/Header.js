@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Header({ firstName, lastName, image }) {
+    const navigation = useNavigation();
   
     return (
         <View style={styles.container}>
@@ -10,15 +12,17 @@ export default function Header({ firstName, lastName, image }) {
                 source={require('../img/LittleLemonLogo.png')}
             />
             <View style={styles.profileImageContainer}>
-                {image ? (
-                    <Image source={{ uri: image }} style={styles.profileImage} />
-                ) : (
-                    <View style={styles.avatarPlaceholder}>
-                        <Text style={styles.avatarPlaceholderText}>
-                            {firstName[0]}{lastName[0]}
-                        </Text>
-                    </View>
-                )}
+                <Pressable onPress={() => navigation.navigate('Profile')} style={styles.profileImage}>
+                    {image ? (
+                        <Image source={{ uri: image }} style={styles.profileImage} />
+                    ) : (
+                        <View style={styles.avatarPlaceholder}>
+                            <Text style={styles.avatarPlaceholderText}>
+                                {firstName[0]}{lastName[0]}
+                            </Text>
+                        </View>
+                    )}
+                </Pressable>
             </View>
         </View>
     );
