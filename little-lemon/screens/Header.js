@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 50,
-        marginLeft: 10,
+        marginLeft: 0,
         marginRight:0,
     },
     avatarPlaceholderText: {
