@@ -1,10 +1,8 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
 export default function Header({ firstName, lastName, image }) {
-    const navigation = useNavigation();
-
+  
     return (
         <View style={styles.container}>
             <Image
@@ -12,17 +10,15 @@ export default function Header({ firstName, lastName, image }) {
                 source={require('../img/LittleLemonLogo.png')}
             />
             <View style={styles.profileImageContainer}>
-                <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                    {image ? (
-                        <Image source={{ uri: image }} style={styles.profileImage} />
-                    ) : (
-                        <View style={styles.avatarPlaceholder}>
-                            <Text style={styles.avatarPlaceholderText}>
-                                {firstName[0]}{lastName[0]}
-                            </Text>
-                        </View>
-                    )}
-                </TouchableOpacity>
+                {image ? (
+                    <Image source={{ uri: image }} style={styles.profileImage} />
+                ) : (
+                    <View style={styles.avatarPlaceholder}>
+                        <Text style={styles.avatarPlaceholderText}>
+                            {firstName[0]}{lastName[0]}
+                        </Text>
+                    </View>
+                )}
             </View>
         </View>
     );
