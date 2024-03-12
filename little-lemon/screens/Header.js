@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     },
     avatarPlaceholderText: {
         fontSize: 20,
-        color: '#333333',
+        color: '#495E57',
         justifyContent: 'center',
     },
 });

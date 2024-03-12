@@ -37,24 +37,24 @@ export default function ProfileScreen({ route, navigation}) {
     };
 
     const handlePress = async () => {
-        try {
-            const userData = {
-                image,
-                firstName,
-                lastName,
-                email,
-                formattedPhoneNumber,
-                isSelectedOrderStatuses,
-                isSelectedPasswordChanges,
-                isSelectedSpecialOffers,
-                isSelectedNewsletter,
-            };
-    
-            await AsyncStorage.setItem('userData', JSON.stringify(userData));
-            navigation.navigate('Home');
-        } catch (error) {
-            console.error(error);
-        }
+      try {
+        const userData = {
+          image,
+          firstName,
+          lastName,
+          email,
+          formattedPhoneNumber,
+          isSelectedOrderStatuses,
+          isSelectedPasswordChanges,
+          isSelectedSpecialOffers,
+          isSelectedNewsletter,
+        };
+
+        await AsyncStorage.setItem('userData', JSON.stringify(userData));
+        navigation.navigate('Home', { firstName, lastName, image }); // Pass firstName, lastName, and image as parameters
+      } catch (error) {
+        console.error(error);
+      }
     };
     
 
@@ -383,7 +383,7 @@ const styles = StyleSheet.create({
     },
     avatarPlaceholderText: {
         fontSize: 40,
-        color: '#333333',
+        color: '#495E57',
     },
 });
 
