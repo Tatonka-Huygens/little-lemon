@@ -42,7 +42,7 @@ export default function App() {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={{ flex: 1 }}
           >
-          <Stack.Navigator initialRouteName={isOnboardingCompleted ? "Profile" : "Onboarding"}>
+          <Stack.Navigator initialRouteName={isOnboardingCompleted ? "Home" : "Onboarding"}>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} />
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Profile" component={ProfileScreen} />
