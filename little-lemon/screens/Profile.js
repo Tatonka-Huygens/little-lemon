@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ScrollView,
   View,
@@ -29,6 +29,23 @@ export default function ProfileScreen({ route, navigation}) {
     const [isSelectedSpecialOffers, setSelectionSpecialOffers] = useState(false);
     const [isSelectedNewsletter, setSelectionNewsletter] = useState(false);
     const [image, setImage] = useState(null);
+    const [userData, setUserData] = useState({ firstName: '', lastName: '', image: '' });
+
+    useEffect(() => {
+      const fetchUserData = async () => {
+        try {
+          const value = await AsyncStorage.getItem('userData');
+          if(value !== null) {
+            setUserData(JSON.parse(value));
+          }
+        } catch(e) {
+          console.error(e);
+        }
+      }
+  
+      fetchUserData();
+    }, []);
+  
 
 
     const onChangePhoneNumber = (number) => {
@@ -143,7 +160,7 @@ export default function ProfileScreen({ route, navigation}) {
 
     return (
       <>
-      <Header route={route} firstName={firstName} lastName={lastName} image={image} />
+      <Header userData={userData} />
         <ScrollView style={styles.container} keyboardDismissMode='on-drag'>
           <Text style={styles.headerText}>Personal information</Text>
           <Text style={styles.regularText}>Avatar</Text>

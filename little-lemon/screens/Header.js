@@ -1,10 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Header({ firstName, lastName, image }) {
+export default function Header() {
     const navigation = useNavigation();
-  
+    const [userData, setUserData] = useState({ firstName: '', lastName: '', image: '' });
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const value = await AsyncStorage.getItem('userData');
+                if(value !== null) {
+                    setUserData(JSON.parse(value));
+                }
+            } catch(e) {
+                console.error(e);
+            }
+        }
+
+        fetchUserData();
+    }, []);
+
     return (
         <View style={styles.container}>
             <Image
@@ -13,12 +30,12 @@ export default function Header({ firstName, lastName, image }) {
             />
             <View style={styles.profileImageContainer}>
                 <Pressable onPress={() => navigation.navigate('Profile')} style={styles.profileImage}>
-                    {image ? (
-                        <Image source={{ uri: image }} style={styles.profileImage} />
+                    {userData.image ? (
+                        <Image source={{ uri: userData.image }} style={styles.profileImage} />
                     ) : (
                         <View style={styles.avatarPlaceholder}>
                             <Text style={styles.avatarPlaceholderText}>
-                                {firstName[0]}{lastName[0]}
+                                {userData.firstName[0]}{userData.lastName[0]}
                             </Text>
                         </View>
                     )}
