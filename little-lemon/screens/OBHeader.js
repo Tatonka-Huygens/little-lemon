@@ -8,7 +8,7 @@ export default function OBHeader() {
     Animated.loop(
       Animated.timing(spinValue, {
         toValue: 1,
-        duration: 5000, // Increase duration for slower spin
+        duration: 30000, // Increase duration for slower spin
         useNativeDriver: true,
       })
     ).start();
