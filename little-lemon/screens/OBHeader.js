@@ -2,29 +2,16 @@ import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
 
 export default function OBHeader() {
-  const bounceValue = useRef(new Animated.Value(500)).current;
   const spinValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    Animated.sequence([
-      Animated.spring(bounceValue, {
-        toValue: 0,
-        speed: 3,
-        bounciness: 15,
-        useNativeDriver: true,
-      }),
-      Animated.spring(bounceValue, {
-        toValue: 0,
-        speed: 1,
-        bounciness: 20,
-        useNativeDriver: true,
-      }),
+    Animated.loop(
       Animated.timing(spinValue, {
         toValue: 1,
-        duration: 800,
+        duration: 5000, // Increase duration for slower spin
         useNativeDriver: true,
-      }),
-    ]).start();
+      })
+    ).start();
   }, []);
 
   const spin = spinValue.interpolate({
@@ -37,7 +24,7 @@ export default function OBHeader() {
       <Animated.Image
         style={[
           styles.logo,
-          { transform: [{ translateX: bounceValue }, { rotate: spin }] },
+          { transform: [{ rotateY: spin }] },
         ]}
         source={require('../img/LittleLemonLogo.png')}
         resizeMode="contain"
@@ -45,7 +32,6 @@ export default function OBHeader() {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#EE9972',

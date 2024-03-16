@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable, Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Header() {
     const navigation = useNavigation();
     const [userData, setUserData] = useState({ firstName: '', lastName: '', image: '' });
+    const spinValue = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -20,12 +21,26 @@ export default function Header() {
         }
 
         fetchUserData();
+
+        Animated.timing(spinValue, { // Remove Animated.loop
+            toValue: 1,
+            duration: 5000,
+            useNativeDriver: true,
+        }).start();
     }, []);
+
+    const spin = spinValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['0deg', '360deg'],
+    });
 
     return (
         <View style={styles.container}>
-            <Image
-                style={styles.logo}
+            <Animated.Image
+                style={[
+                    styles.logo,
+                    { transform: [{ rotateY: spin }] },
+                ]}
                 source={require('../img/LittleLemonLogo.png')}
             />
             <View style={styles.profileImageContainer}>
