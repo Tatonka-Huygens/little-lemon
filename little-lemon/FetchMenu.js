@@ -7,7 +7,6 @@ import {
     StyleSheet,
     SafeAreaView,
     Image, // Import Image from react-native
-    ItemSeparatorComponent
 } from 'react-native';
 
 export default FetchMenu = () => {
@@ -47,12 +46,17 @@ export default FetchMenu = () => {
     );
 
     const renderItem = ({ item }) => (
-        <Item
-            name={item.name}
-            description={item.description}
-            price={item.price}
-            image={item.image} // Pass image prop to Item
-        />
+        <View style={menuStyles.itemContainer}>
+            <View style={menuStyles.textContainer}>
+                <Text style={menuStyles.headerText}>{item.name}</Text>
+                <Text style={menuStyles.itemText}>{item.description}</Text>
+                <Text style={menuStyles.itemText}>${parseFloat(item.price).toFixed(2)}</Text>
+            </View>
+            <Image
+                style={menuStyles.imageStyle}
+                source={{ uri: `https://github.com/Meta-Mobile-Developer-PC/Working-With-Data-API/blob/main/images/${item.image}?raw=true` }}
+            />
+        </View>
     );
 
 
@@ -79,39 +83,54 @@ export default FetchMenu = () => {
 const menuStyles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#495E57',
   },
-  innerContainer: {
+innerContainer: {
     paddingHorizontal: 40,
     paddingVertical: 20,
     backgroundColor: '#495E57',
-    flexDirection: 'column', // Change flexDirection to 'row'
-    justifyContent: 'space-between', // Add space between the text and the image
+    flexDirection: 'row', // Change flexDirection to 'row'
+    justifyContent: 'space-evenly', // Add justifyContent property
 },
   itemText: {
     color: '#F4CE14',
-    fontSize: 22,
+    fontSize: 20,
     textAlign: 'left',
+    marginBottom: 10,
   },
   headerText: {
-    color: '#495E57',
-    fontSize: 30,
-    textAlign: 'center',
+    color: '#F4CE14',
+    fontSize: 28,
+    textAlign: 'left',
+    marginBottom: 10,
   },
   imageStyle: {
     width: 100, // or whatever size you want
     height: 100, // or whatever size you want
+    justifyContent: 'center',
+
 },
 textContainer: {
-    flex: 1,
+    flexDirection: 'row', // Change flexDirection to 'column'
     flexWrap: 'wrap', // Wrap the text
     alignItems: 'flex-start', // Align the text to the left
     justifyContent: 'left', // Center the text horizontally
-    textwrap: 'wrap',
 },
 separator: {
     height: 1,
     width: '100%',
-    backgroundColor: '#F4CE14', // Change the color to match your design
+    backgroundColor: '#EE9972', // Change the color to match your design
+},
+itemContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+},
+textContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    marginRight: 10,
 },
 });
 
