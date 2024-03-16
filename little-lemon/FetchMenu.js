@@ -6,7 +6,8 @@ import {
     View,
     StyleSheet,
     SafeAreaView,
-    Image // Import Image from react-native
+    Image, // Import Image from react-native
+    ItemSeparatorComponent
 } from 'react-native';
 
 export default FetchMenu = () => {
@@ -33,7 +34,7 @@ export default FetchMenu = () => {
 
     const Item = ({ name, description, price, image }) => (
         <View style={menuStyles.innerContainer}>
-            <View>
+            <View style={menuStyles.textContainer}>
                 <Text style={menuStyles.itemText}>{name}</Text>
                 <Text style={menuStyles.itemText}>{description}</Text>
                 <Text style={menuStyles.itemText}>${price}</Text>
@@ -60,23 +61,26 @@ export default FetchMenu = () => {
             {isLoading ? (
                 <ActivityIndicator />
             ) : (
-                <View>
+                <View style={menuStyles.textContainer}> 
                 <FlatList
                     data={data}
                     keyExtractor={(item, index) => index.toString()} // Use index as the key
                     renderItem={renderItem}
+                    ItemSeparatorComponent={() => <View style={menuStyles.separator} />} // Add a line delimiter between records
                 />
                 </View>
             )}
         </SafeAreaView>
     );
+
+
 };
 
 const menuStyles = StyleSheet.create({
   container: {
     flex: 1,
   },
-    innerContainer: {
+  innerContainer: {
     paddingHorizontal: 40,
     paddingVertical: 20,
     backgroundColor: '#495E57',
@@ -96,6 +100,18 @@ const menuStyles = StyleSheet.create({
   imageStyle: {
     width: 100, // or whatever size you want
     height: 100, // or whatever size you want
+},
+textContainer: {
+    flex: 1,
+    flexWrap: 'wrap', // Wrap the text
+    alignItems: 'flex-start', // Align the text to the left
+    justifyContent: 'left', // Center the text horizontally
+    textwrap: 'wrap',
+},
+separator: {
+    height: 1,
+    width: '100%',
+    backgroundColor: '#F4CE14', // Change the color to match your design
 },
 });
 
