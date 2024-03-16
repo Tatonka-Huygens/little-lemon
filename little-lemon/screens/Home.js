@@ -2,6 +2,7 @@ import { React, useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from './Header';
+import FetchMenu from '../FetchMenu';
 
 function HomeScreen({ navigation }) {
     const [userData, setUserData] = useState({ firstName: '', lastName: '', image: '' });
@@ -24,8 +25,10 @@ function HomeScreen({ navigation }) {
     return (
         <>
         <Header />
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Home Page</Text>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View>
+            <Text><FetchMenu/></Text>
+            </View>
         </View>
         </>
     );
