@@ -83,7 +83,7 @@ export default FetchMenu = () => {
 const menuStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#495E57',
+    backgroundColor: '#495E57',
   },
 innerContainer: {
     paddingHorizontal: 40,
