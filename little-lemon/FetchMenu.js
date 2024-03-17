@@ -6,21 +6,48 @@ import {
     View,
     StyleSheet,
     SafeAreaView,
-    Image, // Import Image from react-native
+    Image,
 } from 'react-native';
-import Collapsible from 'react-native-collapsible';
+import * as SQLite from 'expo-sqlite';
 
+const db = SQLite.openDatabase('little_lemon');
 
 export default FetchMenu = () => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
 
+    const createTable = () => {
+        db.transaction(tx => {
+            tx.executeSql(
+                'create table if not exists menu (id integer primary key not null, name text, description text, price real, image text);'
+            );
+        });
+    };
+
+    const storeData = (data) => {
+        db.transaction(tx => {
+            data.forEach(item => {
+                tx.executeSql('insert into menu (name, description, price, image) values (?, ?, ?, ?)', [item.name, item.description, item.price, item.image]);
+            });
+        }, null, null);
+    };
+
+    const loadData = () => {
+        db.transaction(tx => {
+            tx.executeSql('select * from menu', [], (_, { rows: { _array } }) => {
+                setData(_array);
+                setLoading(false);
+            });
+        });
+    };
+
     const getMenu = async () => {
-        try { 
+        try {
             const response = await fetch(
-                'https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/capstone.json' 
+                'https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/capstone.json'
             );
             const json = await response.json();
+            storeData(json.menu);
             setData(json.menu);
         } catch (error) {
             console.error(error);
@@ -30,8 +57,14 @@ export default FetchMenu = () => {
     };
 
     useEffect(() => {
-        getMenu();
+        createTable();
+        loadData();
+        if (data.length === 0) {
+            getMenu();
+        }
     }, []);
+
+
 
     const Item = ({ name, description, price, image }) => (
         <View style={menuStyles.innerContainer}>
