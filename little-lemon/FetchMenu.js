@@ -8,6 +8,8 @@ import {
     SafeAreaView,
     Image, // Import Image from react-native
 } from 'react-native';
+import Collapsible from 'react-native-collapsible';
+
 
 export default FetchMenu = () => {
     const [isLoading, setLoading] = useState(true);
