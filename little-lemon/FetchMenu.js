@@ -50,7 +50,7 @@ export default FetchMenu = () => {
             <View style={menuStyles.textContainer}>
                 <Text style={menuStyles.headerText}>{item.name}</Text>
                 <Text style={menuStyles.itemText}>{item.description}</Text>
-                <Text style={menuStyles.itemText}>${parseFloat(item.price).toFixed(2)}</Text>
+                <Text style={menuStyles.headerText}>${parseFloat(item.price).toFixed(2)}</Text>
             </View>
             <Image
                 style={menuStyles.imageStyle}
@@ -100,9 +100,10 @@ innerContainer: {
   },
   headerText: {
     color: '#F4CE14',
-    fontSize: 28,
+    fontSize: 20,
     textAlign: 'left',
     marginBottom: 10,
+    fontWeight: 'bold',
   },
   imageStyle: {
     width: 100, // or whatever size you want
