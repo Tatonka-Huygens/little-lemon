@@ -108,8 +108,6 @@ innerContainer: {
     width: 100, // or whatever size you want
     height: 100, // or whatever size you want
     justifyContent: 'center',
-    marginRight: 30, // Add some space to the right of the image
-    
 
 },
 textContainer: {
@@ -118,6 +116,7 @@ textContainer: {
     alignItems: 'flex-start', // Align the text to the left
     justifyContent: 'left', // Center the text horizontally
     marginRight: 20, // Add some space to the right of the text
+    marginLeft: 10, // Add some space to the left of the text
 },
 separator: {
     height: 1,
@@ -130,7 +129,7 @@ itemContainer: {
     justifyContent: 'space-between', // Put space between the text and image
     alignItems: 'center', // Vertically center the text and image
     padding: 10,
-    marginRight: 80, // Add some space to the right of the text
+    marginRight: 100, // Add some space to the right of the text
 },
 
 });
