@@ -28,7 +28,7 @@ function HomeScreen({ navigation }) {
         <Header />
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:'#495E57' }}>
             <View>
-            <Text><FetchMenu2/></Text>
+            <Text><FetchMenu/></Text>
             </View>
         </View>
         </>

@@ -49,7 +49,7 @@ export default FetchMenu = () => {
         <View style={menuStyles.itemContainer}>
             <View style={menuStyles.textContainer}>
                 <Text style={menuStyles.headerText}>{item.name}</Text>
-                <Text style={menuStyles.itemText}>{item.description}</Text>
+                <Text style={menuStyles.itemText} numberOfLines={2}>{item.description}</Text>
                 <Text style={menuStyles.headerText}>${parseFloat(item.price).toFixed(2)}</Text>
             </View>
             <Image
