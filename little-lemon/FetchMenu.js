@@ -152,7 +152,7 @@ textContainer: {
     flexWrap: 'wrap',
     alignItems: 'flex-start',
     justifyContent: 'flex-start', // Change 'left' to 'flex-start'
-    marginRight: 20,
+    marginRight: 25,
     marginLeft: 5,
     flexShrink: 1, // Add this line
 },
@@ -167,7 +167,7 @@ itemContainer: {
     justifyContent: 'space-between', // Put space between the text and image
     alignItems: 'center', // Vertically center the text and image
     padding: 10,
-    marginRight: 5, // Add some space to the right of the text
+    marginRight: 0, // Add some space to the right of the text
 },
 
 });
