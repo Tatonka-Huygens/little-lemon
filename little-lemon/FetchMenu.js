@@ -118,7 +118,7 @@ export default FetchMenu = () => {
 const menuStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#495E57',
+    backgroundColor: '#333333',
   },
 innerContainer: {
     paddingHorizontal: 40,
@@ -145,14 +145,16 @@ innerContainer: {
     height: 100, // or whatever size you want
     justifyContent: 'center',
 
+
 },
 textContainer: {
-    flexDirection: 'row', // Change flexDirection to 'column'
-    flexWrap: 'wrap', // Wrap the text
-    alignItems: 'flex-start', // Align the text to the left
-    justifyContent: 'left', // Center the text horizontally
-    marginRight: 20, // Add some space to the right of the text
-    marginLeft: 10, // Add some space to the left of the text
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start', // Change 'left' to 'flex-start'
+    marginRight: 20,
+    marginLeft: 5,
+    flexShrink: 1, // Add this line
 },
 separator: {
     height: 1,
@@ -165,7 +167,7 @@ itemContainer: {
     justifyContent: 'space-between', // Put space between the text and image
     alignItems: 'center', // Vertically center the text and image
     padding: 10,
-    marginRight: 100, // Add some space to the right of the text
+    marginRight: -10, // Add some space to the right of the text
 },
 
 });
