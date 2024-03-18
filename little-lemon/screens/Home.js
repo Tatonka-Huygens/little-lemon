@@ -4,8 +4,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from './Header';
 import FetchMenu from '../FetchMenu';
 import FetchMenu2 from '../FetchMenu2';
+import CategoryList from '../CategoryList';
+
 
 function HomeScreen({ navigation }) {
+    const categories = ['Starters', 'Mains', 'Desserts', 'Drinks', 'Specials'];
     const [userData, setUserData] = useState({ firstName: '', lastName: '', image: '' });
 
     useEffect(() => {
@@ -26,11 +29,8 @@ function HomeScreen({ navigation }) {
     return (
         <>
         <Header />
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:'#495E57' }}>
-            <View>
-            <Text><FetchMenu/></Text>
-            </View>
-        </View>
+        <CategoryList categories={categories} />
+        <FetchMenu/>
         </>
     );
 }

@@ -121,7 +121,7 @@ const menuStyles = StyleSheet.create({
     backgroundColor: '#333333',
   },
 innerContainer: {
-    paddingHorizontal: 40,
+    paddingHorizontal: 20,
     paddingVertical: 20,
     backgroundColor: '#495E57',
     flexDirection: 'row', // Change flexDirection to 'row'
@@ -144,7 +144,7 @@ innerContainer: {
     width: 100, // or whatever size you want
     height: 100, // or whatever size you want
     justifyContent: 'center',
-
+    marginRight: -10
 
 },
 textContainer: {
@@ -167,7 +167,7 @@ itemContainer: {
     justifyContent: 'space-between', // Put space between the text and image
     alignItems: 'center', // Vertically center the text and image
     padding: 10,
-    marginRight: -10, // Add some space to the right of the text
+    marginRight: 5, // Add some space to the right of the text
 },
 
 });
