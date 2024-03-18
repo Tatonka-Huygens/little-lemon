@@ -43,9 +43,9 @@ export default function App() {
           style={{ flex: 1 }}
           >
           <Stack.Navigator initialRouteName={isOnboardingCompleted ? "Home" : "Onboarding"}>
-            <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Profile" component={ProfileScreen} />
+            <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{headerBackTitleVisible:'false', headerStyle: { backgroundColor:'#333333'},  headerTintColor: '#fff',}}/>
+            <Stack.Screen name="Home" component={HomeScreen} options={{headerBackTitleVisible:'false', headerStyle: { backgroundColor:'#333333'},  headerTintColor: '#fff',}}/>
+            <Stack.Screen name="Profile" component={ProfileScreen} options={{headerBackTitleVisible:'false', headerStyle: { backgroundColor:'#333333'},  headerTintColor: '#fff',}}/>
           </Stack.Navigator>
           </KeyboardAvoidingView>
         </NavigationContainer>

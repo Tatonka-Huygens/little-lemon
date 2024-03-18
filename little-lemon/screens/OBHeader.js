@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 150,
     resizeMode: 'contain',
-    marginTop: 40,
-    marginBottom: 20,
+    marginTop: 30,
+    marginBottom: 10,
   },
 });
