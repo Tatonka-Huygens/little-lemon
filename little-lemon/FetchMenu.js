@@ -19,7 +19,7 @@ export default FetchMenu = () => {
     const createTable = () => {
         db.transaction(tx => {
             tx.executeSql(
-                'create table if not exists menu (id integer primary key not null, name text, description text, price real, image text);'
+                'create table if not exists menu (id integer primary key not null, name text, description text, price real, image text, category text);'
             );
         });
     };
@@ -27,7 +27,7 @@ export default FetchMenu = () => {
     const storeData = (data) => {
         db.transaction(tx => {
             data.forEach(item => {
-                tx.executeSql('insert into menu (name, description, price, image) values (?, ?, ?, ?)', [item.name, item.description, item.price, item.image]);
+                tx.executeSql('insert into menu (name, description, price, image, category) values (?, ?, ?, ?, ?)', [item.name, item.description, item.price, item.image, item.category]);
             });
         }, null, null);
     };
