@@ -1,75 +1,177 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Dimensions, StyleSheet } from 'react-native';
+import { useEffect, useState, useCallback, useMemo } from 'react';
+import {
+  Text,
+  View,
+  StyleSheet,
+  SectionList,
+  SafeAreaView,
+  StatusBar,
+  Alert,
+  ScrollView,
+} from 'react-native';
+import { Searchbar } from 'react-native-paper';
+import debounce from 'lodash.debounce';
+import {
+  createTable,
+  getMenuItems,
+  saveMenuItems,
+  filterByQueryAndCategories,
+} from './database';
+import Filters from './components/Filters';
+import { getSectionListData, useUpdateEffect } from './utils';
 
-const FetchMenu2 = () => {
-    const [data, setData] = useState([]);
+const API_URL =
+  'https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/menu-items-by-category.json';
+const sections = ['Appetizers', 'Salads', 'Beverages', 'Entrees', 'Desserts'];
 
-    const getDataFromApiAsync = async () => {
-        try {
-            const response = await fetch('https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/capstone.json');
-            const json = await response.json();
-            setData(json.menu);
-        } catch (error) {
-            console.error(error);
+const Item = ({ title, price }) => (
+  <View style={styles.item}>
+    <Text style={styles.title}>{title}</Text>
+    <Text style={styles.title}>${price}</Text>
+  </View>
+);
+
+export default function FetchMenu2() {
+  const [data, setData] = useState([]);
+  const [searchBarText, setSearchBarText] = useState('');
+  const [query, setQuery] = useState('');
+  const [filterSelections, setFilterSelections] = useState(
+    sections.map(() => false)
+  );
+
+  useEffect(() => {
+    (async () => {
+      try {
+        // 1. Create table if it does not exist
+        await createTable();
+        // 2. Check if data was already stored
+        let menuItems = await getMenuItems();
+
+        if (!menuItems.length) {
+          // Fetching menu from URL
+          const response = await fetch(API_URL);
+          const json = await response.json();
+          menuItems = json.menu.map((item) => ({
+            ...item,
+            category: item.category.title,
+          }));
+          // Storing into database
+          saveMenuItems(menuItems);
         }
-    };
 
-    useEffect(() => {
-        const windowWidth = Dimensions.get('window').width;
-        const windowHeight = Dimensions.get('window').height;
+        const sectionListData = getSectionListData(menuItems);
+        setData(sectionListData);
+      } catch (e) {
+        // Handle error
+        Alert.alert(e.message);
+      }
+    })();
+  }, []);
 
-        console.log('Window Width:', windowWidth);
-        console.log('Window Height:', windowHeight);
-        getDataFromApiAsync();
-    }, []);
+  useUpdateEffect(() => {
+    (async () => {
+      const activeCategories = sections.filter((s, i) => {
+        // If all filters are deselected, all categories are active
+        if (filterSelections.every((item) => item === false)) {
+          return true;
+        }
+        return filterSelections[i];
+      });
+      try {
+        const menuItems = await filterByQueryAndCategories(
+          query,
+          activeCategories
+        );
+        const sectionListData = getSectionListData(menuItems);
+        setData(sectionListData);
+      } catch (e) {
+        Alert.alert(e.message);
+      }
+    })();
+  }, [filterSelections, query]);
 
-    return (
-        <FlatList
-            data={data}
-            renderItem={({ item }) => (
-                <View style={styles.itemContainer}>
-                    <Text style={styles.headerText}>{item.name}</Text>
-                    <Text style={styles.descriptionText} numberOfLines={2}>{item.description}</Text>
-                    <Text style={styles.priceText}>${parseFloat(item.price).toFixed(2)}</Text>
-                </View>
-            )}
-            keyExtractor={(item, index) => index.toString()}
-            ItemSeparatorComponent={() => <View style={styles.separator} />} // Add a line delimiter between records
+  const lookup = useCallback((q) => {
+    setQuery(q);
+  }, []);
+
+  const debouncedLookup = useMemo(() => debounce(lookup, 500), [lookup]);
+
+  const handleSearchChange = (text) => {
+    setSearchBarText(text);
+    debouncedLookup(text);
+  };
+
+  const handleFiltersChange = async (index) => {
+    const arrayCopy = [...filterSelections];
+    arrayCopy[index] = !filterSelections[index];
+    setFilterSelections(arrayCopy);
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <Searchbar
+        placeholder="Search"
+        placeholderTextColor="white"
+        onChangeText={handleSearchChange}
+        value={searchBarText}
+        style={styles.searchBar}
+        iconColor="white"
+        inputStyle={{ color: 'white' }}
+        elevation={0}
+      />
+        <View style={{ flexDirection: 'row' }}>
+          <ScrollView horizontal={true}>
+        <Filters
+          selections={filterSelections}
+          onChange={handleFiltersChange}
+          sections={sections}
         />
-    );
-};
+          </ScrollView>
+        </View>
+      <SectionList
+        style={styles.sectionList}
+        sections={data}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <Item title={item.title} price={item.price} />
+        )}
+      />
+    </SafeAreaView>
+  );
+}
 
 const styles = StyleSheet.create({
-    itemContainer: {
-        flex: 1,
-        flexDirection: 'column',
-        margin: 10,
-        padding: 10,
-        backgroundColor: '#495E57',
-        borderRadius: 5,
-    },
-    headerText: {
-        fontSize: 20,
-        color: '#000',
-        fontWeight: 'bold',
-        marginBottom: 5,
-    },
-    descriptionText: {
-        fontSize: 18,
-        color: '#000',
-        marginBottom: 5,
-    },
-    priceText: {
-        fontSize: 20,
-        color: '#000',
-        fontWeight: '500'
-    },
-    separator: {
-        height: 1,
-        width: '100%',
-        backgroundColor: '#EE9972', // Change the color to match your design
-        marginLeft: 20, // Add some space to the left of the line
-    },
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+    backgroundColor: '#495E57',
+  },
+  sectionList: {
+    paddingHorizontal: 16,
+  },
+  searchBar: {
+    marginBottom: 24,
+    backgroundColor: '#495E57',
+    shadowRadius: 0,
+    shadowOpacity: 0,
+  },
+  item: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+  },
+  header: {
+    fontSize: 24,
+    paddingVertical: 8,
+    color: '#FBDABB',
+    backgroundColor: '#495E57',
+  },
+  title: {
+    fontSize: 20,
+    color: 'white',
+  },
+  scView: {
+    backgroundColor: '#495E57',
+  },
 });
-
-export default FetchMenu2;

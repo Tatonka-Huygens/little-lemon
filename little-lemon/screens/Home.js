@@ -3,11 +3,10 @@ import { View, Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from './Header';
 import FetchMenu from '../FetchMenu';
-import FetchMenu2 from '../FetchMenu2';
 import CategoryList from '../CategoryList';
 
 
-function HomeScreen({ navigation }) {
+function HomeScreen({navigation, route, setMenuData, menu}) {
     const categories = ['Starters', 'Mains', 'Desserts', 'Drinks', 'Specials'];
     const [userData, setUserData] = useState({ firstName: '', lastName: '', image: '' });
 
