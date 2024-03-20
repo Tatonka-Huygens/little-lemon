@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, Button, View, Text, StyleSheet, Pressable } from 'react-native';
-
+import FetchMenu from './FetchMenu';
 
 
 
@@ -16,6 +16,7 @@ const CategoryList = ({ categories }) => {
     };
 
     return (
+        <>
         <View style={{ flexDirection: 'row' }}>
             <ScrollView horizontal={true}>
             {categories.map((category, index) => (
@@ -36,6 +37,12 @@ const CategoryList = ({ categories }) => {
             ))}
             </ScrollView>
         </View>
+        <View>
+            <Text>
+                <FetchMenu />
+            </Text>
+        </View>
+        </>
     );
 
 const styles = StyleSheet.create({
