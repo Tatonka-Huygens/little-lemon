@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from './Header';
 import CategoryList from '../CategoryList';
+import FetchMenu from '../FetchMenu';
 
 
 function HomeScreen({navigation, route, setMenuData, menu}) {
@@ -28,6 +29,7 @@ function HomeScreen({navigation, route, setMenuData, menu}) {
         <>
         <Header />
         <CategoryList categories={categories} />
+        <FetchMenu />
         </>
     );
 }

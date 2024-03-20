@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { ScrollView, Button, View, Text, StyleSheet, Pressable } from 'react-native';
-import FetchMenu from './FetchMenu';
 
 
 
@@ -36,11 +35,6 @@ const CategoryList = ({ categories }) => {
                 </Pressable>
             ))}
             </ScrollView>
-        </View>
-        <View>
-            <Text>
-                <FetchMenu />
-            </Text>
         </View>
         </>
     );
