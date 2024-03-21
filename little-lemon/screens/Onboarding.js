@@ -10,6 +10,9 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import OBHeader from './OBHeader';
+import HeroBannerOB from '../HeroBannerOB';
+import HeroImage from '../img/HeroImage.png'; // Import the image
+import * as Font from 'expo-font';
 
 
 
@@ -61,7 +64,13 @@ export default function OnboardingScreen({ navigation }) {
       <OBHeader />
         <View style={styles.container}>
           <ScrollView keyboardDismissMode = 'on-drag'>
-            <Text style={styles.headerText}>Let us get to know you</Text>
+              <HeroBannerOB 
+            title="Little Lemon" 
+            subtitle="Chicago" 
+            description="We are a family owned Meditarranean restaurant, focused on traditional recipes served with a modern twist." 
+            imageUrl={HeroImage} // Use the imported image
+            footer="Let us get to know you!"
+            />
             <Text style={styles.regularText}>First Name</Text>
             <TextInput
               style={styles.inputBox}
