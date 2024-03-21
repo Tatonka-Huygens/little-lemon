@@ -13,8 +13,8 @@ const HeroBanner = ({ title, subtitle, description, imageUrl }) => {
                 <Text style={{ fontSize: 18, color: 'gray' }}>{subtitle}</Text>
                 <Text style={{ fontSize: 16 }}>{description}</Text>
             </View>
-            <Image source={imageUrl} style={{ width: 100, height: 100, alignSelf: 'center' }} />
-            <View style={{ flexDirection: 'row', height: 40, borderColor: 'gray', borderWidth: 1, position: 'absolute', bottom: 20, left: 20, right: 20, alignItems: 'center', borderRadius: 5 }}>
+            <Image source={imageUrl} style={{ borderRadius:15, width: 150, height: 150, alignSelf: 'center' }} />
+            <View style={{ flexDirection: 'row', height: 40, borderColor: 'gray', borderWidth: 1, position: 'absolute',bottom: 10, left: 10, right: 10, alignItems: 'center', borderRadius: 5 }}>
                 <Icon name="search" size={20} color="gray" style={{ marginLeft: 10 }} />
                 <TextInput style={{ flex: 1, marginLeft: 10 }} placeholder="Search..." />
             </View>
