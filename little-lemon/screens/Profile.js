@@ -382,7 +382,6 @@ const styles = StyleSheet.create({
         },
       removeButton: {
         backgroundColor: '#EDEFEE',
-        borderRadius: 5,
         alignContent: 'center',
       },
       discardChangesButton: {
