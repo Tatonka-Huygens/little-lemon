@@ -6,6 +6,7 @@ import CategoryList from '../CategoryList';
 import FetchMenu from '../FetchMenu';
 import HeroBanner from '../HeroBanner';
 import HeroImage from '../img/HeroImage.png'; // Import the image
+import * as Font from 'expo-font';
 
 
 function HomeScreen({navigation, route, setMenuData, menu}) {
