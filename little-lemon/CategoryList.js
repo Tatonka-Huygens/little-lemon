@@ -16,7 +16,7 @@ const CategoryList = ({ categories }) => {
 
     return (
         <>
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row', backgroundColor: '#EE9972' }}>
             <ScrollView horizontal={true}>
             {categories.map((category, index) => (
                 <Pressable

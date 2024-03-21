@@ -26,14 +26,14 @@ const HeroBanner = ({ title, subtitle, description, imageUrl }) => {
     }
 
     return (
-        <View style={{ width: screenWidth, height: screenHeight * 0.3, flexDirection: 'row', padding: 10, position: 'relative' }}>
+        <View style={{ width: screenWidth, height: screenHeight * 0.3, flexDirection: 'row', padding: 10, position: 'relative', backgroundColor: '#495E57' }}>
             <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: 30, fontWeight: 'bold', fontFamily: 'MarkaziText-Regular' }}>{title}</Text>
-                <Text style={{ fontSize: 18, color: 'gray', fontFamily: 'Karla-Regular' }}>{subtitle}</Text>
+                <Text style={{ fontSize: 30, color:'#F4CE14', fontWeight: 'bold', fontFamily: 'MarkaziText-Regular' }}>{title}</Text>
+                <Text style={{ fontSize: 18, color: '#fff', fontFamily: 'Karla-Regular' }}>{subtitle}</Text>
                 <Text style={{ fontSize: 16, fontFamily: 'Karla-Regular' }}>{description}</Text>
             </View>
-            <Image source={imageUrl} style={{ width: 150, height: 150, alignSelf: 'center', borderRadius: 10, bottom:10 }} />
-            <View style={{ flexDirection: 'row', height: 40, borderColor: 'gray', borderWidth: 1, position: 'absolute', bottom: 5, left: 10, right: 10, alignItems: 'center', borderRadius: 5 }}>
+            <Image source={imageUrl} style={{ width: 150, height: 150, alignSelf: 'center', borderRadius: 10, bottom:15 }} />
+            <View style={{ flexDirection: 'row', height: 40, borderColor: 'gray', borderWidth: 1, position: 'absolute', bottom: 10, left: 10, right: 10, alignItems: 'center', borderRadius: 5, backgroundColor: '#fff', }}>
                 <Icon name="search" size={20} color="gray" style={{ marginLeft: 10 }} />
                 <TextInput style={{ flex: 1, marginLeft: 10, fontFamily: 'Karla-Regular' }} placeholder="Search..." />
             </View>
