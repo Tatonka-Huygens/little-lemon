@@ -13,7 +13,7 @@ function HomeScreen({navigation, route, setMenuData, menu}) {
     const categories = ['Starters', 'Mains', 'Desserts', 'Drinks', 'Specials'];
     const [userData, setUserData] = useState({ firstName: '', lastName: '', image: '' });
     
-
+ 
     useEffect(() => {
         const fetchUserData = async () => {
             try {

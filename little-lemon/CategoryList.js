@@ -16,6 +16,9 @@ const CategoryList = ({ categories }) => {
 
     return (
         <>
+        <View>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'left', padding: 10, backgroundColor: '#EE9972' }}>ORDER FOR DELIVERY!</Text>
+        </View>
         <View style={{ flexDirection: 'row', backgroundColor: '#EE9972' }}>
             <ScrollView horizontal={true}>
             {categories.map((category, index) => (

@@ -22,12 +22,14 @@ export default function Header() {
 
         fetchUserData();
 
-        Animated.timing(spinValue, {
-            toValue: 1,
-            duration: 10000, // Increase duration for slower spin
-            useNativeDriver: true,
-        }).start(); // Remove Animated.loop and Animated.sequence
-    }, []);
+        Animated.loop(
+            Animated.timing(spinValue, {
+              toValue: 1,
+              duration: 30000, // Increase duration for slower spin
+              useNativeDriver: true,
+            })
+          ).start();
+        }, []);
 
     const spin = spinValue.interpolate({
         inputRange: [0, 1],
